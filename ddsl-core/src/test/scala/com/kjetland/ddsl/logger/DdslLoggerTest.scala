@@ -4,13 +4,14 @@ import org.scalatest._
 import org.junit.Test
 import org.junit.Assert._
 import org.joda.time.DateTime
+import com.kjetland.ddsl.model._
 
 class DdslLoggerTest extends FlatSpec {
 	class LoggerStub extends LoggerClient {
-		var data = ""
-				var sent = false
-				override def send (dataToSend: String){
-			data = dataToSend
+			var sent = false
+			var data : ServiceRequest = _
+			override def send (dataToSend: ServiceRequest){
+					data = dataToSend
 					sent = true
 		}
 	}
@@ -20,9 +21,11 @@ class DdslLoggerTest extends FlatSpec {
     val loggerClient = new LoggerStub
     val logger = new DdslLogger(loggerClient)
     val myData = "This is my data"
-    logger.log(myData)
+    val serviceRequest = ServiceRequest(ServiceId("test", "http", "myTestService", "1.0"), ClientId("test", "client", "1.0","127.0.0.1"));
+    logger.log(serviceRequest)
     
     assert(loggerClient.sent == true)
-    assert(loggerClient.data == myData)
+    assert(loggerClient.data.cid == serviceRequest.cid)
+    assert(loggerClient.data.sid == serviceRequest.sid)
   }
 }
