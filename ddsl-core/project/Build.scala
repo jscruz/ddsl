@@ -5,6 +5,8 @@ object DdslCoreBuild extends Build {
 
   val mbknorGithubRepoUrl = "http://mbknor.github.com/m2repo/releases/"
   val typesafeRepoUrl = "http://repo.typesafe.com/typesafe/releases/"
+  val sprayRepositoryUrl = "http://repo.spray.io/"
+  
 
   lazy val DdslCoreProject = Project(
     "ddsl",
@@ -15,7 +17,7 @@ object DdslCoreBuild extends Build {
       publishTo := Some(Resolvers.mbknorRepository),
       scalacOptions ++= Seq("-Xlint","-deprecation", "-unchecked","-encoding", "utf8"),
       javacOptions ++= Seq("-encoding", "utf8", "-g"),
-      resolvers ++= Seq(DefaultMavenRepository, Resolvers.mbknorGithubRepo, Resolvers.typesafe)
+      resolvers ++= Seq(DefaultMavenRepository, Resolvers.mbknorGithubRepo, Resolvers.typesafe, Resolvers.sprayRepository)
     )
   )
 
@@ -24,6 +26,7 @@ object DdslCoreBuild extends Build {
     val mbknorRepository = Resolver.ssh("my local mbknor repo", "localhost", "~/projects/mbknor/mbknor.github.com/m2repo/releases/")(Resolver.mavenStylePatterns)
     val mbknorGithubRepo = "mbknor github Repository" at mbknorGithubRepoUrl
     val typesafe = "Typesafe Repository" at typesafeRepoUrl
+    val sprayRepository = "spray" at sprayRepositoryUrl
   }
 
   object Dependencies {
@@ -36,7 +39,7 @@ object DdslCoreBuild extends Build {
       "org.scalatest"          %% "scalatest"         % "1.9"    % "test",
       "junit"                   % "junit"             % "4.8.2"  % "test",
       "joda-time"               % "joda-time"         % "1.6.2",
-      "commons-codec"           % "commons-codec"     % "1.4"
+      "commons-codec"           % "commons-codec"     % "1.4",
       "io.spray"               %% "spray-json"        % "1.2.5"
     )
   }
