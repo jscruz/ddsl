@@ -37,6 +37,7 @@ object DdslCoreBuild extends Build {
       "junit"                   % "junit"             % "4.8.2"  % "test",
       "joda-time"               % "joda-time"         % "1.6.2",
       "commons-codec"           % "commons-codec"     % "1.4"
+      "io.spray"               %% "spray-json"        % "1.2.5"
     )
   }
 
